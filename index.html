@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Save Form Data to CSV</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f9f9f9;
+    }
+    .form-container {
+      width: 340px;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+    }
+    .form-container h2 {
+      color: #333;
+    }
+    .form-container label {
+      display: block;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .form-container input[type="text"],
+    .form-container input[type="email"],
+    .form-container input[type="number"],
+    .form-container textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 4px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .form-container button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <h2>Practical SOP 1</h2>
+  <form id="userForm">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="phone">Phone Number</label>
+    <input type="text" id="phone" name="phone" required>
+
+    <label for="city">City</label>
+    <input type="text" id="city" name="city" required>
+
+    <label for="state">State</label>
+    <input type="text" id="state" name="state" required>
+
+    <label for="country">Country</label>
+    <input type="text" id="country" name="country" required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="age">Age</label>
+    <input type="number" id="age" name="age" required>
+
+    <label for="education">Educational Qualifications</label>
+    <textarea id="education" name="education" rows="3" required></textarea>
+
+    <button type="button" onclick="saveToCSV()">Submit and Download Your Response</button>
+  </form>
+</div>
+
+<script>
+  function saveToCSV() {
+    // Collect form data
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const city = document.getElementById("city").value;
+    const state = document.getElementById("state").value;
+    const country = document.getElementById("country").value;
+    const email = document.getElementById("email").value;
+    const age = document.getElementById("age").value;
+    const education = document.getElementById("education").value;
+
+    // Create CSV content with headers
+    const csvContent = "data:text/csv;charset=utf-8,"
+                     + "Name,Phone Number,City,State,Country,Email,Age,Educational Qualifications\n"
+                     + `"${name}","${phone}","${city}","${state}","${country}","${email}","${age}","${education}"\n`;
+
+    // Encode CSV and create downloadable link
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "user_data.csv");
+    document.body.appendChild(link);
+
+    // Trigger download
+    link.click();
+    document.body.removeChild(link);
+  }
+</script>
+
+</body>
+</html>
